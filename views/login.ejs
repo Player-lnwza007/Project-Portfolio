@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Log in & Register</title>
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <style>
+    /* Your existing styles */
+  </style>
+  <link href="\stylesheets\login.css" rel="stylesheet">
+</head>
+
+<body class="text-center">
+
+  <main class="form-signin">
+    <ul class="nav nav-pills justify-content-center">
+      <li class="nav-item">
+        <a class="nav-link active" id="login-tab" data-bs-toggle="tab" href="#login">Log in</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="register-tab" data-bs-toggle="tab" href="#register">Register</a>
+      </li>
+    </ul>
+
+    <div class="tab-content my-2">
+      <div class="tab-pane fade show active" id="login">
+        <!-- Log in form -->
+        <form>
+          <img class="mb-4" src="\images\ima-1.png" alt="" width="72" height="57">
+          <h1 class="h3 mb-3 fw-normal">Log in</h1>
+          <div class="form-floating">
+            <input type="email" class="form-control" id="LoginEmail" placeholder="name@example.com">
+            <label for="LoginEmail">Email address</label>
+          </div>
+          <div class="form-floating">
+            <input type="password" class="form-control" id="LoginPassword" placeholder="Password">
+            <label for="LoginPassword">Password</label>
+          </div>
+          <button class="w-100 btn btn-lg btn-primary" id="LoginSubmit" type="button">Log in</button>
+        </form>
+      </div>
+
+      <div class="tab-pane fade" id="register">
+        <!-- Register form -->
+        <form>
+          <img class="mb-4" src="\images\ima-1.png" alt="" width="72" height="57">
+          <h1 class="h3 mb-3 fw-normal">Register</h1>
+          <div class="form-floating">
+            <input type="text" class="form-control" id="RegisterUsername" placeholder="Username">
+            <label for="RegisterUsername">Username</label>
+          </div>
+          <div class="form-floating">
+            <input type="email" class="form-control" id="RegisterEmail" placeholder="name@example.com">
+            <label for="RegisterEmail">Email address</label>
+          </div>
+          <div class="form-floating">
+            <input type="password" class="form-control" id="RegisterPassword" placeholder="Password">
+            <label for="RegisterPassword">Password</label>
+          </div>
+          <button class="w-100 btn btn-lg btn-primary" id="RegisterSubmit" type="button">Register</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <script src="javascripts\login&register.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
