@@ -28,6 +28,9 @@ body {
 
 
 
-.form-signin input[type="password"] {
+.form-signin input[id="ConfirmRegisterPassword"] {
+  margin-bottom: 10px;
+}
+.form-signin input[id="LoginPassword"] {
   margin-bottom: 10px;
 }
