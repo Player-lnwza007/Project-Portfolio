@@ -1,15 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const knex = require('knex')(require('../knexfile').development);
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 // กำหนด path
 router.get('/login', function (req, res, next) {
-    res.render("login");
+    res.render("User/login");
 });
 router.get('/', function (req, res, next) {
-    res.render("index");
+    res.render("User/index");
 });
 
 // บันทึกข้อมูลลงฐานข้อมูล
@@ -38,20 +39,21 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
-
     try {
         const user = await knex('users').where({ email }).first();
-
         if (user && await bcrypt.compare(password, user.password)) {
-            // รหัสผ่านตรงกัน
-            res.json({ success: true, user: user });
+            // รหัสผ่านตรงกัน, สร้างโทเค็นโดยใช้อีเมล
+            const token = jwt.sign({ userId: user.id, email: user.email, username: user.username}, 'secret_key', { expiresIn: '1h' });
+            res.json({ success: true, token });
+            console.log(token)
         } else {
             // รหัสผ่านไม่ตรง
-            res.json({ success: false, message: 'อีเมลหรือรหัสผ่านไม่ถูกต้อง' });
+            res.status(401).json({ success: false, message: 'อีเมลหรือรหัสผ่านไม่ถูกต้อง' });
         }
     } catch (error) {
-        res.status(500).json({ success: false, message: 'เกิดข้อผิดพลาดในการล็อคอิน' });
+        res.status(500).json({ success: false, message: 'เกิดข้อผิดพลาดในระบบ' });
     }
 });
+
 
 module.exports = router;

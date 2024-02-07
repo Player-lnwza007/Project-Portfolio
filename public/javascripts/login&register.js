@@ -95,6 +95,7 @@ document.getElementById('LoginSubmit').addEventListener('click', function () {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
+                localStorage.setItem('userToken', data.token);
                 window.location.href = '/';
             } else {
                 // แสดงข้อผิดพลาด
