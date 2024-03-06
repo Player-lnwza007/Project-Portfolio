@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const token = localStorage.getItem('userToken');
+    const token = localStorage.getItem('adminToken');
     if (token) {
         try {
             const base64Url = token.split('.')[1];
@@ -10,22 +10,22 @@ document.addEventListener('DOMContentLoaded', function() {
             // ตรวจสอบอายุโทเค็น
             const now = Date.now() / 1000;
             if (payload.exp < now) {
-                localStorage.removeItem('userToken');
-                window.location.href = '/login';
+                localStorage.removeItem('adminToken');
+                window.location.href = '/admin/login';
             } else {
                 document.getElementById('username').textContent = payload.username;
                 document.getElementById('email').textContent = payload.email;
             }
         } catch (error) {
             console.error('Error decoding token:', error);
-            window.location.href = '/login';
+            window.location.href = '/admin/login';
         }
     } else {
-        window.location.href = '/login';
+        window.location.href = '/admin/login';
     }
 });
 
 function logout() {
-    localStorage.removeItem('userToken');
-    window.location.href = '/login';
+    localStorage.removeItem('adminToken');
+    window.location.href = '/admin/login'; // หรือไปยังหน้าอื่นที่คุณต้องการ
 }

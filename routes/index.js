@@ -7,15 +7,15 @@ const saltRounds = 10;
 
 // กำหนด path
 router.get('/login', function (req, res, next) {
-    res.render("User/login");
+    res.render("login");
 });
 router.get('/', function (req, res, next) {
-    res.render("User/index");
+    res.render("index");
 });
 
-// บันทึกข้อมูลลงฐานข้อมูล
+// สมัครสมาชิก
 router.post('/register', async (req, res) => {
-    const { username, email, password } = req.body;
+    const { rank,prefix,username, email, password } = req.body;
 
     try {
         // ตรวจสอบว่ามีอีเมลนี้ในฐานข้อมูลหรือไม่
@@ -26,6 +26,8 @@ router.post('/register', async (req, res) => {
         // ดำเนินการเข้ารหัสรหัสผ่านและบันทึกข้อมูลผู้ใช้ใหม่
         const hashedPassword = await bcrypt.hash(password, saltRounds);
         await knex('users').insert({
+            rank_id: rank,
+            prefix: prefix,
             username: username,
             email: email,
             password: hashedPassword
@@ -37,13 +39,14 @@ router.post('/register', async (req, res) => {
     console.log(req.body);
 });
 
+// เข้าสู่ระบบ
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
     try {
         const user = await knex('users').where({ email }).first();
         if (user && await bcrypt.compare(password, user.password)) {
             // รหัสผ่านตรงกัน, สร้างโทเค็นโดยใช้อีเมล
-            const token = jwt.sign({ userId: user.id, email: user.email, username: user.username}, 'secret_key', { expiresIn: '1h' });
+            const token = jwt.sign({ userId: user.id, email: user.email, username: user.username}, 'secret_key', { expiresIn: '50m' });
             res.json({ success: true, token });
             console.log(token)
         } else {
@@ -55,5 +58,16 @@ router.post('/login', async (req, res) => {
     }
 });
 
+
+router.get('/getRanksName', (req, res) => {
+    knex('ranks').select('*')
+      .then(data => {
+        res.json(data);
+      })
+      .catch(err => {
+        console.error(err);
+        res.status(500).send('Error retrieving data');
+      });
+  });
 
 module.exports = router;

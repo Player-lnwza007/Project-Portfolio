@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ranks Page</title>
+    <%- include('../style.ejs'); %>
+</head>
+
+<body>
+    <%- include('menu.ejs'); %>
+        <!-- BEGIN: Content-->
+        <div class="app-content content ">
+            <div class="content-overlay"></div>
+            <div class="header-navbar-shadow"></div>
+            <div class="content-wrapper container-xxl p-0">
+                <div class="content-header row">
+                    <div class="content-header-left col-md-9 col-12 mb-2">
+                        <div class="row breadcrumbs-top">
+                            <div class="col-12">
+                                <h2 class="content-header-title float-start mb-0">รายวิชา</h2>
+                                <div class="breadcrumb-wrapper">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="/admin">หน้าแรก</a>
+                                        </li>
+                                        <li class="breadcrumb-item active">รายวิชา
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-body">
+                    <!-- Basic table -->
+                    <section id="basic-datatable">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>
+                                            <div class="input-group input-group-merge">
+                                                <span class="input-group-text"><i data-feather="search"></i></span>
+                                                <input type="text" id="searchBox" class="form-control"
+                                                    placeholder="Search...">
+                                            </div>
+                                        </h4>
+                                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                            data-bs-target="#addRank">
+                                            เพิ่มวิชา
+                                        </button>
+                                    </div>
+                                    <table class="datatables-basic table">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>ชื่อวิชา</th>
+                                                <th>กลุ่มเรียน</th>
+                                                <th>เวลาเริ่ม</th>
+                                                <th>เวลาจบ</th>
+                                                <th style="width: 10%;">แก้ไข</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal to add new record -->
+                        <div class="modal modal-slide-in fade" id="addRank">
+                            <div class="modal-dialog sidebar-sm">
+                                <form class="add-new-record modal-content pt-0">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close">×</button>
+                                    <div class="modal-header mb-1">
+                                        <h5 class="modal-title">เพิ่มวิชา</h5>
+                                    </div>
+                                    <div class="modal-body flex-grow-1">
+                                        <div class="mb-1">
+                                            <label class="form-label"
+                                                for="SubjectsName">ขื่อวิชา</label>
+                                            <input type="text" class="form-control dt-full-name"
+                                                id="SubjectsName" placeholder="...." aria-label="...." />
+                                        </div>
+                                        <div class="mb-1">
+                                            <label class="form-label"
+                                                for="StudyGroup">กลุ่มเรียน</label>
+                                            <input type="text" class="form-control dt-full-name"
+                                                id="StudyGroup" placeholder="...." aria-label="...." />
+                                        </div>
+                                        <div class="mb-1">
+                                            <label class="form-label" for="fp-time">Time picker</label>
+                                    <input type="text" id="fp-time" class="form-control flatpickr-time text-start" placeholder="HH:MM" />
+                                        </div>
+                                        <div class="mb-1">
+                                            <label class="form-label" for="select2-basic">Basic</label>
+                                            <select class="select2 form-select" id="select2-basic">
+                                                <option value="AK">Alaska</option>
+                                                <option value="HI">Hawaii</option>
+                                                <option value="CA">California</option>
+                                                <option value="NV">Nevada</option>
+                                            </select>
+                                        </div>
+                                        <button type="button" class="btn btn-success data-submit me-1" id="SetRankSubmit" onclick="addRank()">บันทึก</button>
+                                        <button type="reset" class="btn btn-outline-secondary"
+                                            data-bs-dismiss="modal">ปิด</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- Modal to edit record -->
+                        <div class="modal modal-slide-in fade" id="editRank">
+                            <div class="modal-dialog sidebar-sm">
+                                <form class="add-new-record modal-content pt-0 " id="editForm">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close">×</button>
+                                    <div class="modal-header mb-1">
+                                        <h5 class="modal-title" id="exampleModalLabel">แก้ไขตำแหน่ง</h5>
+                                    </div>
+                                    <div class="modal-body flex-grow-1">
+                                        <div class="mb-1">
+                                            <label class="form-label"
+                                                for="editRankName">ขื่อตำแหน่ง</label>
+                                            <input type="text" class="form-control dt-full-name"
+                                                id="editRankName" placeholder="...." aria-label="...." />
+                                        </div>
+                                        <div class="mb-1">
+                                            <label class="form-label">หน้า1</label>
+                                            <select id="editPage1" name="editPage1" class="form-select">
+                                                <option value="N">ปิดใช้งาน
+                                                </option>
+                                                <option value="Y">เปิดใช้งาน
+                                                </option>
+
+                                            </select>
+                                        </div>
+                                        <div class="mb-1">
+                                            <label class="form-label">หน้า2</label>
+                                            <select id="editPage2" name="editPage2" class="form-select">
+                                                <option value="N">ปิดใช้งาน
+                                                </option>
+                                                <option value="Y">เปิดใช้งาน
+                                                </option>
+
+                                            </select>
+                                        </div>
+                                        <div class="mb-1">
+                                            <label class="form-label">หน้า3</label>
+                                            <select id="editPage3" name="editPage3" class="form-select">
+                                                <option value="N">ปิดใช้งาน
+                                                </option>
+                                                <option value="Y">เปิดใช้งาน
+                                                </option>
+
+                                            </select>
+                                        </div>
+                                        <button type="button" class="btn btn-success data-submit me-1" id="EditRankSubmit" onclick="updateRank()">บันทึก</button>
+                                        <button type="button" class="btn btn-danger data-submit me-1" onclick="deleteRank()">ลบ</button>
+                                        <button type="reset" class="btn btn-outline-secondary"
+                                            data-bs-dismiss="modal">ปิด</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </section>
+                    <!--/ Basic table -->
+                </div>
+            </div>
+        </div>
+        <!-- END: Content-->
+</body>
+<%- include('../admin/script.ejs'); %>
+<script src="/javascripts/admin/admin_subjects.js"></script>
+<script src="../../../app-assets/js/scripts/forms/form-select2.js"></script>
+<script src="../../../app-assets/js/scripts/forms/pickers/form-pickers.js"></script>
+
+</html>

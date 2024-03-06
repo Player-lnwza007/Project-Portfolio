@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Log in</title>
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <style>
+  </style>
+  <link href="\stylesheets\login.css" rel="stylesheet">
+</head>
+
+<body class="text-center">
+  <main class="form-signin">
+    <!-- Log in form -->
+    <form>
+      <h1 class="h3 mb-3 fw-normal">Admin Log in</h1>
+      <div class="form-floating">
+        <input type="email" class="form-control" id="LoginEmail" placeholder="name@example.com">
+        <label for="LoginEmail">Email address</label>
+      </div>
+      <div class="form-floating">
+        <input type="password" class="form-control" id="LoginPassword" placeholder="Password">
+        <label for="LoginPassword">Password</label>
+      </div>
+      <button class="w-100 btn btn-lg btn-primary" id="LoginSubmit" type="button">Log in</button>
+    </form>
+  </main>
+  <script src="/javascripts/admin/admin_login.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../../../app-assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
+</body>
+
+</html>
