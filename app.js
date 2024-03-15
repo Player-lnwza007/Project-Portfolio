@@ -35,6 +35,8 @@ app.use('/javascripts', express.static(path.join(__dirname, 'public/javascripts'
 app.use('/', indexRouter,adminRouter);
 app.use('/api', indexRouter,adminRouter); 
 app.use('/admin', adminRouter);
+app.use('/api', indexRouter);
+app.use('/api/admin', adminRouter);
 
 app.get('/', function (req, res) {
   res.render("index");
