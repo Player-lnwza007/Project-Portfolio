@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-router.get('/', function (req, res, next) {
+router.get('/admin', function (req, res, next) {
   res.render("admin/admin_index");
 });
 

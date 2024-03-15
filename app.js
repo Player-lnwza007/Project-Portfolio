@@ -36,6 +36,13 @@ app.use('/', indexRouter,adminRouter);
 app.use('/api', indexRouter,adminRouter); 
 app.use('/admin', adminRouter);
 
+app.get('/', function (req, res) {
+  res.render("index");
+});
+app.get('/admin', function (req, res) {
+  res.render("admin/admin_index");
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
