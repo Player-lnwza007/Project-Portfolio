@@ -2,6 +2,17 @@ const express = require('express');
 const router = express.Router();
 const knex = require('knex')(require('../knexfile').development);
 const jwt = require('jsonwebtoken');
+const multer = require('multer');
+const path = require('path');
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, 'uploads'));
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  }
+});
+const upload = multer({ storage: storage });
 
 router.get('/', function (req, res, next) {
   res.render("admin/admin_index");
@@ -29,6 +40,55 @@ router.post('/login', async (req, res) => {
   }
 });
 
+router.get('/getRanksName', (req, res) => {
+  knex('ranks').select('*')
+    .then(data => {
+      res.json(data);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send('Error retrieving data');
+    });
+});
+
+router.get('/manageUsers', function (req, res, next) {
+  res.render("admin/admin_manage_users");
+});
+// สมัครสมาชิก
+router.post('/addUser', upload.single('user_image'), async (req, res) => {
+  const { rank, prefix, username, email, password } = req.body;
+  try {
+    const existingUser = await knex('users').where({ email }).first();
+    if (existingUser) {
+      return res.status(400).json({ success: false, message: 'อีเมลถูกใช้งานไปแล้ว' });
+    }
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    await knex('users').insert({
+      rank_id: rank,
+      prefix: prefix,
+      username: username,
+      email: email,
+      password: hashedPassword,
+      user_image: req.file.filename
+    });
+    res.status(201).send('User registered');
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Error registering user' });
+  }
+});
+router.get('/getUsers', (req, res) => {
+  knex('user').select('*')
+    .then(data => {
+      res.json(data);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send('Error retrieving data');
+    });
+});
+
+
+// กำหนดตำแหน่ง
 router.get('/ranks', function (req, res, next) {
   res.render("admin/admin_ranks");
 });

@@ -1,3 +1,14 @@
 .no-data {
   text-align: center;
 }
+
+.error {
+  color: red;
+  display: none; /* ซ่อนข้อความแจ้งเตือนเมื่อไม่มีข้อผิดพลาด */
+  margin-top: 5px;
+  font-size: 0.8em;
+}
+
+input.invalid {
+  border: 1px solid red;
+}

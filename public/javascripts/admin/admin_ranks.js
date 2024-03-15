@@ -1,9 +1,9 @@
-
 function addRank() {
     const rankname = document.getElementById('NameRanks').value;
-    const select_page1 = document.getElementById('select_page1').value;
-    const select_page2 = document.getElementById('select_page2').value;
-    const select_page3 = document.getElementById('select_page3').value;
+    const select_page1 = document.getElementById('select_page1').checked ? 'Y' : 'N';
+    const select_page2 = document.getElementById('select_page2').checked ? 'Y' : 'N';
+    const select_page3 = document.getElementById('select_page3').checked ? 'Y' : 'N';
+    
     fetch('/addRank', {
         method: 'POST',
         headers: {
@@ -26,7 +26,7 @@ function addRank() {
             document.getElementById('select_page3').value = 'N';
 
             // Close modal
-            document.querySelector('.btn-close').click();
+            $("#addRank").modal("hide");
 
             // Fetch and update table
             fetchRanks();
@@ -52,12 +52,23 @@ function fetchRanks() {
                     <tr>
                         <td>${index + 1}</td>
                         <td>${rank.rankname}</td>
-                        <td>${rank.page1 ? 'เปิดใช้งาน' : 'ปิดใช้งาน'}</td>
-                        <td>${rank.page2 ? 'เปิดใช้งาน' : 'ปิดใช้งาน'}</td>
-                        <td>${rank.page3 ? 'เปิดใช้งาน' : 'ปิดใช้งาน'}</td>
                         <td>
-                            <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
-                            data-bs-target="#editRank" onclick="editRank(${rank.id})">แก้ไข</button>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="page1Checkbox-${rank.id}" ${rank.page1 ? 'checked' : ''} onchange="updatePage('page1', ${rank.id}, this.checked)" disabled/>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="page2Checkbox-${rank.id}" ${rank.page2 ? 'checked' : ''} onchange="updatePage('page2', ${rank.id}, this.checked)" disabled/>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="page3Checkbox-${rank.id}" ${rank.page3 ? 'checked' : ''} onchange="updatePage('page3', ${rank.id}, this.checked)" disabled/>
+                            </div>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editRank" onclick="editRank(${rank.id})">แก้ไข</button>
                         </td>
                     </tr>
                     `;
@@ -77,9 +88,9 @@ function editRank(id) {
         .then(response => response.json())
         .then(data => {
             document.getElementById('editRankName').value = data.rankname;
-            document.getElementById('editPage1').value = data.page1 ? 'Y' : 'N';
-            document.getElementById('editPage2').value = data.page2 ? 'Y' : 'N';
-            document.getElementById('editPage3').value = data.page3 ? 'Y' : 'N';
+            document.getElementById('editPage1').checked = (data.page1 === 1);
+            document.getElementById('editPage2').checked = (data.page2 === 1);
+            document.getElementById('editPage3').checked = (data.page3 === 1);
 
             // Store the current rank ID in a hidden input or a global variable
             document.getElementById('editForm').setAttribute('data-current-id', id);
@@ -92,12 +103,15 @@ function editRank(id) {
         });
 }
 
+
+
+
 function updateRank() {
     const id = document.getElementById('editForm').getAttribute('data-current-id');
     const rankname = document.getElementById('editRankName').value;
-    const page1 = document.getElementById('editPage1').value;
-    const page2 = document.getElementById('editPage2').value;
-    const page3 = document.getElementById('editPage3').value;
+    const page1 = document.getElementById('editPage1').checked ? 'Y' : 'N';
+    const page2 = document.getElementById('editPage2').checked ? 'Y' : 'N';
+    const page3 = document.getElementById('editPage3').checked ? 'Y' : 'N';
 
     fetch(`/updateRank/${id}`, {
         method: 'POST',
@@ -106,17 +120,18 @@ function updateRank() {
         },
         body: JSON.stringify({ rankname, page1, page2, page3 }),
     })
-    .then(() => {
-        // Close the modal
-        $("#editRank").modal("hide");
+        .then(() => {
+            // Close the modal
+            $("#editRank").modal("hide");
 
-        // Refresh the table
-        fetchRanks();
-    })
-    .catch(error => {
-        console.error('Error updating rank:', error);
-    });
+            // Refresh the table
+            fetchRanks();
+        })
+        .catch(error => {
+            console.error('Error updating rank:', error);
+        });
 }
+
 
 
 function deleteRank() {

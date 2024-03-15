@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ranks Page</title>
+    <%- include('../style.ejs'); %>
+</head>
+
+<body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click"
+    data-menu="vertical-menu-modern" data-col="">
+    <%- include('menu.ejs'); %>
+        <!-- BEGIN: Content-->
+        <div class="app-content content ">
+            <div class="content-overlay"></div>
+            <div class="header-navbar-shadow"></div>
+            <div class="content-wrapper container-xxl p-0">
+                <div class="content-header row">
+                    <div class="content-header-left col-md-9 col-12 mb-2">
+                        <div class="row breadcrumbs-top">
+                            <div class="col-12">
+                                <h2 class="content-header-title float-start mb-0">จัดการผู้ใช้</h2>
+                                <div class="breadcrumb-wrapper">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="/admin">หน้าแรก</a>
+                                        </li>
+                                        <li class="breadcrumb-item active">จัดการผู้ใช้
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-body">
+                    <!-- Basic table -->
+                    <section id="basic-datatable">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>
+                                            <div class="input-group input-group-merge">
+                                                <span class="input-group-text"><i data-feather="search"></i></span>
+                                                <input type="text" id="searchBox" class="form-control"
+                                                    placeholder="Search...">
+                                            </div>
+                                        </h4>
+                                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                            data-bs-target="#addUser">
+                                            เพิ่มผู้ใช้ใหม่
+                                        </button>
+                                    </div>
+                                    <table class="datatables-basic table">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 5%;">#</th>
+                                                <th style="width: 15%;">ตำแหน่ง</th>
+                                                <th>คำนำหน้า</th>
+                                                <th>ชื่อผู้ใช้</th>
+                                                <th>Email</th>
+                                                <th style="width: 10%;">แก้ไข</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal to add new record -->
+                        <div class="modal fade" id="addUser">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <form class="add-new-record modal-content pt-0" id="addUserForm">
+                                    <div class="modal-header mb-1">
+                                        <h4 class="modal-title">เพิ่มผู้ใช้</h4>
+                                    </div>
+                                    <div class="modal-body flex-grow-1">
+                                        <div class="d-flex row justify-content-center mb-2">
+                                            <a href="#" class="me-25">
+                                                <img src="/images/none.png" id="profile_img"
+                                                    class="uploadedAvatar rounded me-50" alt="profile image"
+                                                    height="100" width="100" />
+                                            </a>
+                                            <div class="d-flex align-items-end mt-75 ms-1">
+                                                <div>
+                                                    <label for="profile_upload"
+                                                        class="btn btn-sm btn-success mb-75 me-75">อัพโหลด</label>
+                                                    <input type="file" id="profile_upload" hidden accept="image/*" />
+                                                    <small class="text-muted">ความละเอียดของภาพที่แนะนำ
+                                                        100x100,
+                                                        ขนาดรูปภาพไม่เกิน
+                                                        10mb.</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="mb-1 col-6">
+                                                <label for="UserRank">ตำแหน่ง</label>
+                                                <select id="UserRank" class="select2 form-select"
+                                                    aria-label="Floating label select example">
+                                                </select>
+                                            </div>
+                                            <div class="mb-1 col-6">
+                                                <label for="UserPrefix">คำนำหน้า</label>
+                                                <select id="UserPrefix" class="select2 form-select"
+                                                    aria-label="Floating label select example">
+                                                    <option>นาย</option>
+                                                    <option>นาง</option>
+                                                    <option>นางสาว</option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-1 col-6">
+                                                <label for="RegisterUsername">ชื่อ</label>
+                                                <input type="text" class="form-control" id="RegisterUsername"
+                                                    placeholder="...">
+                                            </div>
+                                            <div class="mb-1 col-6">
+                                                <label for="RegisterLastname">นามสกุล</label>
+                                                <input type="text" class="form-control" id="RegisterLastname"
+                                                    placeholder="...">
+                                            </div>
+                                            <div class="mb-1 col-6">
+                                                <label for="RegisterEmail">Email</label>
+                                                <input type="email" class="form-control" id="RegisterEmail"
+                                                    placeholder="@chandra.ac.th">
+                                            </div>
+                                            <div class="row"></div>
+                                            <div class="mb-1 col-6">
+                                                <label for="RegisterPassword">รหัสผ่าน</label>
+                                                <input type="password" class="form-control" id="RegisterPassword"
+                                                    placeholder="รหัสผ่าน">
+                                            </div>
+                                            <div class="mb-1 col-6">
+                                                <label for="ConfirmRegisterPassword">ยืนยันรหัสผ่าน</label>
+                                                <input type="password" class="form-control" id="ConfirmRegisterPassword"
+                                                    placeholder="ยืนยันรหัสผ่าน">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-success data-submit me-1"
+                                                id="RegisterSubmit" onclick="addUser()">บันทึก</button>
+                                            <button type="reset" class="btn btn-outline-secondary"
+                                                data-bs-dismiss="modal">ปิด</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- Modal to edit record -->
+                        <div class="modal fade" id="editUser">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <form class="add-new-record modal-content pt-0" id="editUserForm">
+                                    <div class="modal-header mb-1">
+                                        <h4 class="modal-title">แก้ไขผู้ใช้</h4>
+                                    </div>
+                                    <div class="modal-body flex-grow-1">
+                                        <div class="d-flex row justify-content-center mb-2">
+                                            <a href="#" class="me-25">
+                                                <img src="/images/none.png" id="edit_profile_img"
+                                                    class="uploadedAvatar rounded me-50" alt="profile image"
+                                                    height="100" width="100" />
+                                            </a>
+                                            <div class="d-flex align-items-end mt-75 ms-1">
+                                                <div>
+                                                    <label for="edit_profile_upload"
+                                                        class="btn btn-sm btn-success mb-75 me-75">อัพโหลด</label>
+                                                    <input type="file" id="edit_profile_upload" hidden accept="image/*" />
+                                                    <small class="text-muted">ความละเอียดของภาพที่แนะนำ
+                                                        100x100,
+                                                        ขนาดรูปภาพไม่เกิน
+                                                        10mb.</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="mb-1 col-6">
+                                                <label for="EditUserRank">ตำแหน่ง</label>
+                                                <select id="EditUserRank" class="select2 form-select"
+                                                    aria-label="Floating label select example">
+                                                </select>
+                                            </div>
+                                            <div class="mb-1 col-6">
+                                                <label for="EditUserPrefix">คำนำหน้า</label>
+                                                <select id="EditUserPrefix" class="select2 form-select"
+                                                    aria-label="Floating label select example">
+                                                    <option>นาย</option>
+                                                    <option>นาง</option>
+                                                    <option>นางสาว</option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-1 col-6">
+                                                <label for="EditUsername">ชื่อ</label>
+                                                <input type="text" class="form-control" id="EditUsername"
+                                                    placeholder="...">
+                                            </div>
+                                            <div class="mb-1 col-6">
+                                                <label for="EditLastname">นามสกุล</label>
+                                                <input type="text" class="form-control" id="EditLastname"
+                                                    placeholder="...">
+                                            </div>
+                                            <div class="mb-1 col-6">
+                                                <label for="EditEmail">Email</label>
+                                                <input type="email" class="form-control" id="EditEmail"
+                                                    placeholder="@chandra.ac.th">
+                                            </div>
+                                            <div class="row"></div>
+                                            <div class="mb-1 col-6">
+                                                <label for="EditPassword">ตั้งรหัสผ่านใหม่</label>
+                                                <input type="password" class="form-control" id="EditPassword"
+                                                    placeholder="รหัสผ่าน">
+                                            </div>
+                                            <div class="mb-1 col-6">
+                                                <label for="ConfirmEditPassword">ยืนยันรหัสผ่าน</label>
+                                                <input type="password" class="form-control" id="ConfirmEditPassword"
+                                                    placeholder="ยืนยันรหัสผ่าน">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-success data-submit me-1"
+                                                id="EditSubmit" onclick="editUser()">บันทึก</button>
+                                            <button type="reset" class="btn btn-outline-secondary"
+                                                data-bs-dismiss="modal">ปิด</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </section>
+                    <!--/ Basic table -->
+                </div>
+            </div>
+        </div>
+        <!-- END: Content-->
+</body>
+<%- include('../admin/script.ejs'); %>
+    <script src="/javascripts/admin/admin_manage_users.js"></script>
+    <script src="../../../app-assets/js/scripts/forms/form-select2.js"></script>
+    <script src="../../../app-assets/js/scripts/extensions/ext-component-sweet-alerts.js"></script>
+</html>
